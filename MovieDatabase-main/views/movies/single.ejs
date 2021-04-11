@@ -1,0 +1,123 @@
+<div class="container">
+	<div class="card">
+		<div class="card-body">
+			<div class="row">
+				<div class="col-md-6">
+					<img
+						src="/uploads/<%= movie.poster %>"
+						class="img-fluid"
+						alt="<%= movie.title %>"
+					/>
+				</div>
+				<div class="col-md-6">
+					<h2 class="display-4"><%= movie.title %></h2>
+					<div class="lead mb-4">
+						<p><%= movie.plot %></p>
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th scope="col">Runtime</th>
+									<th scope="col"><%= movie.runtime %></th>
+								</tr>
+								<tr>
+									<th scope="col">Year</th>
+									<th scope="col"><%= movie.year %></th>
+								</tr>
+								<tr>
+									<th scope="col">Released</th>
+									<th scope="col"><%= movie.released %></th>
+								</tr>
+							</tbody>
+						</table>
+						<div class="mb-2">
+							<span class="font-weight-bold">Genre</span>
+							<% for (let g of movie.genre) { %>
+							<span class="badge badge-info"><%= g %></span>
+							<% } %>
+						</div>
+						<div class="mb-2">
+							<span class="font-weight-bold">Director(s)</span>
+							<% for (let d of movie.directors) { %>
+							<span class="badge badge-info"><%= d.name %></span>
+							<% } %>
+						</div>
+						<div class="mb-2">
+							<span class="font-weight-bold">Writer(s)</span>
+							<% for (let w of movie.writers) { %>
+							<span class="badge badge-info"><%= w.name %></span>
+							<% } %>
+						</div>
+						<div class="mb-2">
+							<span class="font-weight-bold">Actor(s)</span>
+							<% for (let a of movie.actors) { %>
+							<span class="badge badge-info"><%= a.name %></span>
+							<% } %>
+						</div>
+					</div>
+					<div class="mb-4">
+						<% if (typeof user === 'undefined') { %>
+						<a href="/users/sign-in" class="btn btn-primary">
+							Sign-in
+						</a>
+						<% } else { %> <% if
+						(user.watchlist.includes(movie._id)) { %>
+						<a
+							href="/movies/<%= movie._id %>/watchlist-toggle"
+							class="btn btn-danger"
+						>
+							<i class="bi bi-bookmark-dash"></i> Watchlist
+						</a>
+						<% } else { %>
+						<a
+							href="/movies/<%= movie._id %>/watchlist-toggle"
+							class="btn btn-primary"
+						>
+							<i class="bi bi-bookmark-plus"></i> Watchlist
+						</a>
+						<% } %> <% } %>
+					</div>
+					<% for (let review of reviews) { %>
+					<div class="card mb-1">
+						<div class="card-body">
+							<h5 class="card-title"><%= review.content %></h5>
+							<p class="card-text">
+								<%= review.rating %>
+								<i class="bi bi-star"></i>
+								<i class="bi bi-dash"></i>
+								<a href="/users/<%= review.user._id %>">
+									<%= review.user.name %>
+								</a>
+							</p>
+						</div>
+					</div>
+					<% } if (typeof user !== 'undefined') { %>
+					<form
+						method="POST"
+						action="/movies/<%= movie._id %>/review"
+					>
+						<div class="form-group">
+							<input
+								type="range"
+								min="0"
+								max="10"
+								class="form-control"
+								name="rating"
+							/>
+							<textarea
+								class="form-control"
+								placeholder="Review ..."
+								name="content"
+							></textarea>
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary">
+								Submit
+							</button>
+						</div>
+					</form>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
