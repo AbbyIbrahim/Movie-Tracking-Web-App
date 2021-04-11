@@ -1,0 +1,101 @@
+<div class="container">
+	<div class="mb-3 text-center">
+		<h1 class="font-weight-bold"><%= title %></h1>
+	</div>
+	<form class="row" method="POST" enctype="multipart/form-data">
+		<div class="form-group col-md-4">
+			<label for="poster">Poster*</label>
+			<input
+				type="file"
+				class="form-control-file"
+				id="poster"
+				name="poster"
+			/>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="title">Title*</label>
+			<input type="text" class="form-control" id="title" name="title" />
+		</div>
+		<div class="form-group col-md-4">
+			<label for="year">Year*</label>
+			<input type="number" class="form-control" id="year" name="year" />
+		</div>
+		<div class="form-group col-md-4">
+			<label for="released">Released*</label>
+			<input
+				type="text"
+				class="form-control"
+				id="released"
+				name="released"
+			/>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="runtime">Runtime*</label>
+			<input
+				type="text"
+				class="form-control"
+				id="runtime"
+				name="runtime"
+			/>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="genre">Genre*</label>
+			<select
+				multiple="multiple"
+				class="form-control multiselect"
+				id="genre"
+				name="genre"
+			>
+				<% for (g of genre) { %>
+				<option value="<%= g %>"><%= g %></option>
+				<% } %>
+			</select>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="directors">Directors*</label>
+			<select
+				multiple="multiple"
+				class="form-control multiselect"
+				id="directors"
+				name="directors"
+			>
+				<% for (person of persons) { %>
+				<option value="<%= person._id %>"><%= person.name %></option>
+				<% } %>
+			</select>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="writers">Writers*</label>
+			<select
+				multiple="multiple"
+				class="form-control multiselect"
+				id="writers"
+				name="writers"
+			>
+				<% for (person of persons) { %>
+				<option value="<%= person._id %>"><%= person.name %></option>
+				<% } %>
+			</select>
+		</div>
+		<div class="form-group col-md-4">
+			<label for="actors">Actors*</label>
+			<select
+				multiple="multiple"
+				class="form-control multiselect"
+				id="actors"
+				name="actors"
+			>
+				<% for (person of persons) { %>
+				<option value="<%= person._id %>"><%= person.name %></option>
+				<% } %>
+			</select>
+		</div>
+		<div class="form-group col-md-12">
+			<label for="plot">Plot*</label>
+			<textarea class="form-control" id="plot" name="plot"></textarea>
+		</div>
+		<div class="form-group col-md-12">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+	</form>
+</div>

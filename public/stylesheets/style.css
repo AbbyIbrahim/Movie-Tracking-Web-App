@@ -1,0 +1,24 @@
+body {
+	min-height: 100vh;
+	overflow: auto;
+	position: relative;
+	padding-bottom: 60px;
+}
+
+footer.main {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+}
+
+/* multiselect filter fix */
+.multiselect-container .multiselect-filter > input.multiselect-search {
+	margin-left: -0.7rem !important;
+}
+
+.movie-img {
+	display: block;
+	width: auto;
+	max-height: 370px;
+}

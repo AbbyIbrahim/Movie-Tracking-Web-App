@@ -1,0 +1,50 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 offset-md-4">
+			<div class="mb-3 text-center">
+				<h1 class="font-weight-bold">Profile</h1>
+			</div>
+			<form method="POST">
+				<div class="form-group">
+					<label for="name">Name*</label>
+					<input
+						type="text"
+						class="form-control"
+						id="name"
+						name="name"
+						value="<%= user.name %>"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="username">Username*</label>
+					<input
+						type="text"
+						class="form-control"
+						id="username"
+						name="username"
+						value="<%= user.username %>"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="password">New password</label>
+					<input
+						type="password"
+						class="form-control"
+						id="password"
+						name="password"
+					/>
+				</div>
+				<div class="form-group form-check">
+					<input type="checkbox" class="form-check-input"
+					id="isContributor" name="isContributor" <%=
+					user.isContributor ? "checked" : "" %> />
+
+					<label class="form-check-label" for="isContributor"
+						>Want to contribute?</label
+					>
+				</div>
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+		</div>
+	</div>
+</div>
