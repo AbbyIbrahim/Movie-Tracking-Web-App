@@ -5,6 +5,11 @@
 	<div class="mb-3">
 		<ul class="list-group">
 			<li class="list-group-item">
+				<a href="/users/notifications"
+					>Notifications (<%= user.notifications.length %>)</a
+				>
+			</li>
+			<li class="list-group-item">
 				<a href="/users/<%= user._id %>/profile">Profile</a>
 			</li>
 			<li class="list-group-item">

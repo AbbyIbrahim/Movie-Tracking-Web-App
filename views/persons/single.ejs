@@ -34,6 +34,32 @@
 					<% } %>
 				</ul>
 			</div>
+			<% } %> <% if(wrote.length) { %>
+			<div class="mb-3">
+				<h4 class="font-weight-bold">Wrote</h4>
+				<ul class="list-group">
+					<% for (let movie of wrote) { %>
+					<li class="list-group-item">
+						<a href="/movies/<%= movie._id %>"
+							><%= movie.title %></a
+						>
+					</li>
+					<% } %>
+				</ul>
+			</div>
+			<% } %> <% if(acted.length) { %>
+			<div class="mb-3">
+				<h4 class="font-weight-bold">Acted</h4>
+				<ul class="list-group">
+					<% for (let movie of acted) { %>
+					<li class="list-group-item">
+						<a href="/movies/<%= movie._id %>"
+							><%= movie.title %></a
+						>
+					</li>
+					<% } %>
+				</ul>
+			</div>
 			<% } %>
 		</div>
 	</div>
