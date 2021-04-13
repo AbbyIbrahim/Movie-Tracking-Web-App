@@ -49,4 +49,5 @@ router.use("/api", require("./api/index"));
 // HTML Routes
 router.use("/users", require("./users/index"));
 router.use("/movies", require("./movies/index"));
+router.use("/persons", require("./persons/index"));
 module.exports = router;
