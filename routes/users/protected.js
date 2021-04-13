@@ -34,5 +34,25 @@ router.get("/logout", async (req, res, next) => {
 	res.redirect("/");
 });
 
+router.get("/:id/follow-toggle", async (req, res, next) => {
+	const id = req.params.id;
+	const user = req.user;
+
+	const index = user.followingUsers.indexOf(id);
+	// if exists, remove otherwise add it
+	if (index > -1) {
+		user.followingUsers.splice(index, 1);
+	} else {
+		user.followingUsers.push(id);
+	}
+
+	try {
+		await user.save();
+		res.redirect("/users/" + id);
+	} catch (error) {
+		next(error);
+	}
+});
+
 router.use("/", require("./contribute"));
 module.exports = router;

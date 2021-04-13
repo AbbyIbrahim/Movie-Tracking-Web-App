@@ -24,6 +24,7 @@ router.get("/:id", async (req, res, next) => {
 			title: movie.title,
 			movie,
 			reviews,
+			isUser: !!req.user,
 		});
 	} catch (e) {
 		return next(createHttpError(404));

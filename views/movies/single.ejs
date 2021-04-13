@@ -38,29 +38,38 @@
 						<div class="mb-2">
 							<span class="font-weight-bold">Director(s)</span>
 							<% for (let d of movie.directors) { %>
-							<span class="badge badge-info"><%= d.name %></span>
+							<a
+								href="/persons/<%= d._id %>"
+								class="badge badge-info"
+							>
+								<%= d.name %>
+							</a>
 							<% } %>
 						</div>
 						<div class="mb-2">
 							<span class="font-weight-bold">Writer(s)</span>
 							<% for (let w of movie.writers) { %>
-							<span class="badge badge-info"><%= w.name %></span>
+							<a
+								href="/persons/<%= w._id %>"
+								class="badge badge-info"
+								><%= w.name %></a
+							>
 							<% } %>
 						</div>
 						<div class="mb-2">
 							<span class="font-weight-bold">Actor(s)</span>
 							<% for (let a of movie.actors) { %>
-							<span class="badge badge-info"><%= a.name %></span>
+							<a
+								href="/persons/<%= a._id %>"
+								class="badge badge-info"
+								><%= a.name %></a
+							>
 							<% } %>
 						</div>
 					</div>
 					<div class="mb-4">
-						<% if (typeof user === 'undefined') { %>
-						<a href="/users/sign-in" class="btn btn-primary">
-							Sign-in
-						</a>
-						<% } else { %> <% if
-						(user.watchlist.includes(movie._id)) { %>
+						<% if (isUser && user.watchlist.includes(movie._id)) {
+						%>
 						<a
 							href="/movies/<%= movie._id %>/watchlist-toggle"
 							class="btn btn-danger"
@@ -74,7 +83,7 @@
 						>
 							<i class="bi bi-bookmark-plus"></i> Watchlist
 						</a>
-						<% } %> <% } %>
+						<% } %>
 					</div>
 					<% for (let review of reviews) { %>
 					<div class="card mb-1">
@@ -84,13 +93,13 @@
 								<%= review.rating %>
 								<i class="bi bi-star"></i>
 								<i class="bi bi-dash"></i>
-								<a href="/users/<%= review.user._id %>">
+								<a href="/users/<%= review.user._id %>/profile">
 									<%= review.user.name %>
 								</a>
 							</p>
 						</div>
 					</div>
-					<% } if (typeof user !== 'undefined') { %>
+					<% } if (isUser && user.isContributor) { %>
 					<form
 						method="POST"
 						action="/movies/<%= movie._id %>/review"

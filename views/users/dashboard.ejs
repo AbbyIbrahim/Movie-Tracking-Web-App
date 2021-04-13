@@ -5,7 +5,10 @@
 	<div class="mb-3">
 		<ul class="list-group">
 			<li class="list-group-item">
-				<a href="/users/profile">Profile</a>
+				<a href="/users/<%= user._id %>/profile">Profile</a>
+			</li>
+			<li class="list-group-item">
+				<a href="/users/profile">Update Profile</a>
 			</li>
 			<li class="list-group-item">
 				<a class="text-danger" href="/users/logout">Sign-out</a>

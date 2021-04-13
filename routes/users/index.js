@@ -1,6 +1,7 @@
 var express = require("express");
 const { body, validationResult } = require("express-validator");
 const User = require("../../lib/mongoose/user");
+const Review = require("../../lib/mongoose/review");
 const { signUser } = require("../../lib/jwt");
 const createHttpError = require("http-errors");
 var router = express.Router();
@@ -72,18 +73,29 @@ router.post(
 	}
 );
 
-router.use("/", require("./protected"));
-
-// this is intentionally below the router.use statement due to specificity issues
-router.get("/:id", async (req, res, next) => {
+router.get("/:id/profile", async (req, res, next) => {
 	const id = req.params.id;
 	try {
-		const user = await User.findById(id).populate("watchlist");
-		if (!user) throw "not found";
-		return res.render("users/single", { title: user.name, user });
+		const pUser = await User.findById(id)
+			.populate("watchlist")
+			.populate("followingPersons");
+
+		if (!pUser) throw "not found";
+		const reviews = await Review.find()
+			.where("user", pUser._id)
+			.populate("movie");
+		return res.render("users/single", {
+			title: pUser.name,
+			pUser,
+			reviews,
+			isOwnProfile: pUser.equals(req.user),
+			isFollowing:
+				req.user && req.user.followingUsers.includes(pUser._id),
+		});
 	} catch (e) {
 		return next(createHttpError(404));
 	}
 });
 
+router.use("/", require("./protected"));
 module.exports = router;
