@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const User = require("../lib/mongoose/user");
 const { verifyUser } = require("./../lib/jwt");
+const Movie = require("../lib/mongoose/movie");
 var router = express.Router();
 
 // set user, if available
@@ -19,9 +20,15 @@ router.use(async (req, res, next) => {
 	return next();
 });
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-	res.render("index", { title: "Express" });
+router.get("/", async function (req, res, next) {
+	const user = req.user;
+	let movies;
+	if (user) {
+		movies = await user.movieSuggestions();
+	} else {
+		movies = await Movie.find().limit(4);
+	}
+	res.render("index", { title: "Home", movies });
 });
 
 // serve the uploads

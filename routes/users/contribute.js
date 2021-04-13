@@ -53,7 +53,7 @@ router.post(
 	body("plot").notEmpty(),
 	async (req, res, next) => {
 		if (!req.file) {
-			return next(createHttpError("poster can not be empty"));
+			return next(createHttpError(400, "poster can not be empty"));
 		}
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {

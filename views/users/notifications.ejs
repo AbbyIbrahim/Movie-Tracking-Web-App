@@ -1,0 +1,20 @@
+<div class="container">
+	<div class="mb-3 text-center">
+		<h1 class="font-weight-bold"><%= title %></h1>
+		<div class="row">
+			<div class="col-md-4 offset-md-4">
+				<% if(notifications.length) { %>
+				<div class="mb-3">
+					<ul class="list-group">
+						<% for (let noti of notifications) { %>
+						<li class="list-group-item"><%- noti %></li>
+						<% } %>
+					</ul>
+				</div>
+				<% } else { %>
+				<p class="text-center">No data available.</p>
+				<% } %>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,7 +1,7 @@
 var express = require("express");
 const { body, validationResult } = require("express-validator");
 const Review = require("../../lib/mongoose/review");
-const isUser = require("../users/isUser");
+const isUser = require("../middlewares/isUser");
 var router = express.Router();
 
 router.use(isUser);

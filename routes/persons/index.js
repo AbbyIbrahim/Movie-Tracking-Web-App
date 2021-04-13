@@ -15,10 +15,20 @@ router.get("/:id", async (req, res, next) => {
 			directors: { "$in": person._id },
 		});
 
+		const wrote = await Movie.find().where({
+			writers: { "$in": person._id },
+		});
+
+		const acted = await Movie.find().where({
+			actors: { "$in": person._id },
+		});
+
 		return res.render("persons/single", {
 			title: person.name,
 			person,
 			directed,
+			wrote,
+			acted,
 			isFollowing:
 				req.user && req.user.followingPersons.includes(person._id),
 		});
@@ -27,5 +37,5 @@ router.get("/:id", async (req, res, next) => {
 	}
 });
 
-router.use("/", require("./protected"));
+router.use("/", require("./userRoutes"));
 module.exports = router;
