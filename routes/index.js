@@ -10,12 +10,21 @@ var router = express.Router();
 // set user, if available
 router.use(async (req, res, next) => {
 	if (req.user) return next();
-	const token = req.cookies.auth;
+	/**
+	 * get token
+	 * web app : 'auth' named cookie
+	 * api     : 'Authorization' header in 'Bearer <token>' format
+	 */
+	let token =
+		req.cookies.auth || req.headers.authorization?.replace("Bearer ", "");
+
 	if (token) {
-		const userToken = verifyUser(token);
-		const user = await User.findById(userToken.subject);
-		req.user = user;
-		res.locals.user = user;
+		try {
+			const userToken = verifyUser(token);
+			const user = await User.findById(userToken.subject);
+			req.user = user;
+			res.locals.user = user;
+		} catch {}
 	}
 	return next();
 });
