@@ -23,7 +23,7 @@ router.use(async (req, res, next) => {
 router.get("/", async function (req, res, next) {
 	const user = req.user;
 	let movies;
-	if (user) {
+	if (user && user.watchlist.length) {
 		movies = await user.movieSuggestions();
 	} else {
 		movies = await Movie.find().limit(4);

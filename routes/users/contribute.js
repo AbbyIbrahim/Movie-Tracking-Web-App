@@ -5,6 +5,7 @@ var multer = require("multer");
 const { GENRE } = require("../../constants");
 const Movie = require("../../lib/mongoose/movie");
 const Person = require("../../lib/mongoose/person");
+const { createMovie } = require("../middlewares/validations");
 
 var router = express.Router();
 var upload = multer({ dest: "uploads/" });
@@ -42,15 +43,7 @@ router.get("/add-movie", async (req, res) => {
 router.post(
 	"/add-movie",
 	upload.single("poster"),
-	body("title").notEmpty(),
-	body("year").isNumeric(),
-	body("released").notEmpty(),
-	body("runtime").notEmpty(),
-	body("genre").notEmpty(),
-	body("directors").notEmpty(),
-	body("writers").notEmpty(),
-	body("actors").notEmpty(),
-	body("plot").notEmpty(),
+	createMovie,
 	async (req, res, next) => {
 		if (!req.file) {
 			return next(createHttpError(400, "poster can not be empty"));

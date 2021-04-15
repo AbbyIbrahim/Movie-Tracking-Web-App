@@ -9,6 +9,22 @@ router.get("/", async (req, res, next) => {
 	res.render("movies/list", { title: "Movies", movies });
 });
 
+router.get("/search", async (req, res, next) => {
+	const query = req.query.query;
+	const genre = req.query.genre;
+
+	try {
+		if (!query && !genre) throw "";
+
+		// if both query & genre are provided, every movie must match them
+		let movies = await Movie.search(query, genre).exec();
+
+		res.render("movies/list", { title: "Search", movies, query, genre });
+	} catch (e) {
+		return next(createHttpError(404));
+	}
+});
+
 router.get("/:id", async (req, res, next) => {
 	const id = req.params.id;
 	try {

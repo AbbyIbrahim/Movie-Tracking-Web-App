@@ -1,7 +1,21 @@
 <div class="container">
-	<h1 class="font-weight-bold"><%= title %></h1>
+	<div class="mb-3">
+		<h1 class="font-weight-bold m-0"><%= title %></h1>
+		<% if(typeof genre != 'undefined' || typeof query != 'undefined') { %>
+		<p class="lead">
+			<% if(typeof query != 'undefined') { %>
+			<span>Query</span>
+			<u><%= query %></u>
+			<% } if(typeof genre != 'undefined') { %>
+			<span>Genre</span>
+			<u><%= genre %></u>
+			<% } %>
+		</p>
+		<% } %>
+	</div>
+	<% if(movies.length) { %>
 	<div class="row">
-		<% if(typeof movies != 'undefined') { for (let movie of movies){ %>
+		<% for (let movie of movies) { %>
 		<div class="col-md-4">
 			<div class="card">
 				<img
@@ -23,6 +37,9 @@
 				</div>
 			</div>
 		</div>
-		<% } } %>
+		<% } %>
 	</div>
+	<% } else { %>
+	<p class="text-center">No data available.</p>
+	<% } %>
 </div>
