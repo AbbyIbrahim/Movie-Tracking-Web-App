@@ -5,11 +5,31 @@ const User = require("../../../lib/mongoose/user");
 const { signUser } = require("../../../lib/jwt");
 const { createUser, signInUser } = require("../../middlewares/validations");
 const APIError = require("../../../lib/apiError");
-const Review = require("../../../lib/mongoose/review");
 const isUser = require("../../middlewares/isUser");
+const { PER_PAGE } = require("../../../constants");
 
 const router = express.Router();
 
+// get users
+router.get("/", async (req, res, next) => {
+	const username = req.query.username;
+	const page = parseInt(req.query.page) - 1 || 0;
+	try {
+		let users = User.find();
+		if (username) {
+			users = users.where("username", new RegExp(username, "i"));
+		}
+		users.limit(PER_PAGE).skip(page * PER_PAGE);
+		const pUsers = (await users).map((user) => {
+			return user.toSafeObject();
+		});
+		res.json(pUsers);
+	} catch (e) {
+		next(e);
+	}
+});
+
+// create user
 router.post("/", createUser, async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -28,6 +48,7 @@ router.post("/", createUser, async (req, res, next) => {
 	}
 });
 
+// generate token for authentication
 router.post("/sign-in", signInUser, async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -50,6 +71,7 @@ router.post("/sign-in", signInUser, async (req, res, next) => {
 	}
 });
 
+// get logged user (protected)
 router.get("/current", isUser, async (req, res, next) => {
 	try {
 		const user = req.user;
@@ -59,6 +81,24 @@ router.get("/current", isUser, async (req, res, next) => {
 	}
 });
 
+// update logged user (protected)
+router.put("/:id", isUser, async (req, res, next) => {
+	const user = req.user;
+	try {
+		const { name, username, password } = req.body;
+		if (name) user.name = name;
+		if (username) user.username = username;
+		if (password) user.password = password;
+
+		await user.save();
+
+		res.json(await user.toSafeObject());
+	} catch (e) {
+		next(e);
+	}
+});
+
+// get user
 router.get("/:id", async (req, res, next) => {
 	const id = req.params.id;
 	try {
