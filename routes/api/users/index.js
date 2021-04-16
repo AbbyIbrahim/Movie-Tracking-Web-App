@@ -71,6 +71,21 @@ router.post("/sign-in", signInUser, async (req, res, next) => {
 	}
 });
 
+// follow toggle user (protected)
+router.get("/:id/follow-toggle", isUser, async (req, res, next) => {
+	const id = req.params.id;
+	const user = req.user;
+
+	user.toggleFollowUser(id);
+
+	try {
+		await user.save();
+		res.json(user.followingUsers);
+	} catch (e) {
+		next(e);
+	}
+});
+
 // get logged user (protected)
 router.get("/current", isUser, async (req, res, next) => {
 	try {

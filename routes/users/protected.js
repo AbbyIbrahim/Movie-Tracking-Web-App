@@ -65,13 +65,7 @@ router.get("/:id/follow-toggle", async (req, res, next) => {
 	const id = req.params.id;
 	const user = req.user;
 
-	const index = user.followingUsers.indexOf(id);
-	// if exists, remove otherwise add it
-	if (index > -1) {
-		user.followingUsers.splice(index, 1);
-	} else {
-		user.followingUsers.push(id);
-	}
+	user.toggleFollowUser(id);
 
 	try {
 		await user.save();
