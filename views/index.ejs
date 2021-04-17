@@ -5,7 +5,7 @@
 		<div class="col-md-4">
 			<div class="card">
 				<img
-					src="/uploads/<%= movie.poster %>"
+					src="<%= movie.poster.includes('http') ? movie.poster : '/uploads/' + movie.poster %>"
 					class="card-img-top movie-img"
 					alt="<%= movie.title %>"
 				/>

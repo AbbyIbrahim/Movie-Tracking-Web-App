@@ -1,11 +1,11 @@
 var express = require("express");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const createHttpError = require("http-errors");
 var multer = require("multer");
 const { GENRE } = require("../../constants");
 const Movie = require("../../lib/mongoose/movie");
 const Person = require("../../lib/mongoose/person");
-const { createMovie } = require("../middlewares/validations");
+const { createMovie, createPerson } = require("../middlewares/validations");
 
 var router = express.Router();
 var upload = multer({ dest: "uploads/" });
@@ -14,7 +14,7 @@ router.get("/add-person", async (req, res) => {
 	res.render("users/addPerson", { title: "Add Person" });
 });
 
-router.post("/add-person", body("name").notEmpty(), async (req, res, next) => {
+router.post("/add-person", createPerson, async (req, res, next) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.render("errors", {

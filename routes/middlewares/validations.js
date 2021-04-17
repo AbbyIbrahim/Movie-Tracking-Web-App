@@ -18,4 +18,6 @@ module.exports = {
 		body("password").notEmpty(),
 	],
 	signInUser: [body("username").notEmpty(), body("password").notEmpty()],
+	createReview: [body("rating").isNumeric(), body("content").notEmpty()],
+	createPerson: [body("name").notEmpty()],
 };

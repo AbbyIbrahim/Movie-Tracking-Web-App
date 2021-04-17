@@ -19,7 +19,7 @@
 		<div class="col-md-4">
 			<div class="card">
 				<img
-					src="/uploads/<%= movie.poster %>"
+					src="<%= movie.poster.includes('http') ? movie.poster : '/uploads/' + movie.poster %>"
 					class="card-img-top movie-img"
 					alt="<%= movie.title %>"
 				/>
@@ -38,6 +38,21 @@
 			</div>
 		</div>
 		<% } %>
+	</div>
+	<div class="my-3">
+		<nav>
+			<ul class="pagination">
+				<% if(prevLink) { %>
+				<li class="page-item">
+					<a class="page-link" href="<%= prevLink %>">Previous</a>
+				</li>
+				<% } %> <% if(nextLink) { %>
+				<li class="page-item">
+					<a class="page-link" href="<%= nextLink %>">Next</a>
+				</li>
+				<% } %>
+			</ul>
+		</nav>
 	</div>
 	<% } else { %>
 	<p class="text-center">No data available.</p>

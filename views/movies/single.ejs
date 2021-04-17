@@ -4,7 +4,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<img
-						src="/uploads/<%= movie.poster %>"
+						src="<%= movie.poster.includes('http') ? movie.poster : '/uploads/' + movie.poster %>"
 						class="img-fluid"
 						alt="<%= movie.title %>"
 					/>
@@ -104,7 +104,7 @@
 							</p>
 						</div>
 					</div>
-					<% } if (isUser && user.isContributor) { %>
+					<% } if (isUser) { %>
 					<form
 						method="POST"
 						action="/movies/<%= movie._id %>/review"

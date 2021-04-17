@@ -7,19 +7,21 @@ const { createUser, signInUser } = require("../../middlewares/validations");
 const APIError = require("../../../lib/apiError");
 const isUser = require("../../middlewares/isUser");
 const { PER_PAGE } = require("../../../constants");
+const { getPageSkip } = require("../../../lib/utils");
 
 const router = express.Router();
 
 // get users
 router.get("/", async (req, res, next) => {
 	const username = req.query.username;
-	const page = parseInt(req.query.page) - 1 || 0;
 	try {
 		let users = User.find();
 		if (username) {
 			users = users.where("username", new RegExp(username, "i"));
 		}
-		users.limit(PER_PAGE).skip(page * PER_PAGE);
+
+		users.limit(PER_PAGE).skip(getPageSkip(req.query.page));
+
 		const pUsers = (await users).map((user) => {
 			return user.toSafeObject();
 		});
@@ -81,6 +83,16 @@ router.get("/:id/follow-toggle", isUser, async (req, res, next) => {
 	try {
 		await user.save();
 		res.json(user.followingUsers);
+	} catch (e) {
+		next(e);
+	}
+});
+
+// get the user notifications (protected)
+router.get("/notifications", isUser, async (req, res, next) => {
+	const user = req.user;
+	try {
+		res.json(user.notifications);
 	} catch (e) {
 		next(e);
 	}

@@ -1,5 +1,6 @@
 var express = require("express");
 const Movie = require("../../lib/mongoose/movie");
+const Person = require("../../lib/mongoose/person");
 const User = require("../../lib/mongoose/user");
 const isUser = require("../middlewares/isUser");
 var router = express.Router();
@@ -21,6 +22,13 @@ router.get("/notifications", async (req, res, next) => {
 			const user = await User.findById(noti.user);
 			notifications.push(
 				`<a href="/users/${user._id}/profile">${user.name}</a> reviewed <a href="/movies/${movie._id}/">${movie.title}</a>`
+			);
+		}
+		if (noti.type === "movie") {
+			const movie = await Movie.findById(noti.movie);
+			const person = await Person.findById(noti.person);
+			notifications.push(
+				`New movie: <a href="/movies/${movie._id}/">${movie.title}</a>, by <a href="/persons/${person._id}">${person.name}</a>`
 			);
 		}
 	}
