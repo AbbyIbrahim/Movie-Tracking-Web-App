@@ -1,5 +1,5 @@
 var express = require("express");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const User = require("../../lib/mongoose/user");
 const Review = require("../../lib/mongoose/review");
 const { signUser } = require("../../lib/jwt");
@@ -68,7 +68,8 @@ router.get("/:id/profile", async (req, res, next) => {
 	try {
 		const pUser = await User.findById(id)
 			.populate("watchlist")
-			.populate("followingPersons");
+			.populate("followingPersons")
+			.populate("followingUsers");
 
 		if (!pUser) throw "not found";
 		const reviews = await Review.find()

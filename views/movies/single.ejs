@@ -134,4 +134,42 @@
 			</div>
 		</div>
 	</div>
+	<% if(similar.length) { %>
+	<div class="my-3">
+		<h1 class="font-weight-bold">Similar</h1>
+		<div class="card">
+			<div class="card-body">
+				<div class="row">
+					<% for (let movie of similar) { %>
+					<div class="col-md-4">
+						<div class="card">
+							<img
+								src="<%= movie.poster.includes('http') ? movie.poster : '/uploads/' + movie.poster %>"
+								class="card-img-top movie-img"
+								alt="<%= movie.title %>"
+							/>
+							<div class="card-body">
+								<h5 class="card-title"><%= movie.title %></h5>
+								<p class="card-text"><%= movie.plot %></p>
+								<div class="mb-3">
+									<% for (let g of movie.genre) { %>
+									<span class="badge badge-secondary"
+										><%= g %></span
+									>
+									<% } %>
+								</div>
+								<a
+									href="/movies/<%= movie._id %>"
+									class="btn btn-primary"
+									>Read more</a
+								>
+							</div>
+						</div>
+					</div>
+					<% } %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% } %>
 </div>

@@ -60,6 +60,19 @@
 					<% } %>
 				</ul>
 			</div>
+			<% } %> <% if(topCollaborators.length) { %>
+			<div class="mb-3">
+				<h4 class="font-weight-bold">Top collaborators</h4>
+				<ul class="list-group">
+					<% for (let person of topCollaborators) { %>
+					<li class="list-group-item">
+						<a href="/persons/<%= person._id %>"
+							><%= person.name %></a
+						>
+					</li>
+					<% } %>
+				</ul>
+			</div>
 			<% } %>
 		</div>
 	</div>

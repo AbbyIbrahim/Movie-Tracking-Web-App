@@ -52,12 +52,15 @@ router.get("/:id", async (req, res, next) => {
 			.populate("actors");
 		if (!movie) throw "not found";
 
+		const similar = await movie.findSimilar();
+
 		const reviews = await Review.find().where("movie", id).populate("user");
 
 		return res.render("movies/single", {
 			title: movie.title,
 			movie,
 			reviews,
+			similar,
 			isUser: !!req.user,
 		});
 	} catch (e) {

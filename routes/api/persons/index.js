@@ -71,9 +71,11 @@ router.get("/:id", async (req, res, next) => {
 
 		if (!person) throw createHttpError(404);
 
+		const topCollaborators = await person.findTopCollaborators();
+
 		const pPerson = await person.toPublicObject();
 
-		return res.json(pPerson);
+		return res.json({ ...pPerson, topCollaborators });
 	} catch (e) {
 		return next(e);
 	}

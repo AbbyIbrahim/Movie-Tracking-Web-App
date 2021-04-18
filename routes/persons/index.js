@@ -11,6 +11,8 @@ router.get("/:id", async (req, res, next) => {
 
 		if (!person) throw "not found";
 
+		const topCollaborators = await person.findTopCollaborators();
+
 		const directed = await Movie.find().where({
 			directors: { "$in": person._id },
 		});
@@ -29,6 +31,7 @@ router.get("/:id", async (req, res, next) => {
 			directed,
 			wrote,
 			acted,
+			topCollaborators,
 			isFollowing:
 				req.user && req.user.followingPersons.includes(person._id),
 		});

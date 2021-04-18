@@ -22,7 +22,7 @@
 		<% } %>
 	</div>
 	<div class="row">
-		<div class="col-md-4 offset-md-4">
+		<div class="col-md-6 offset-md-3">
 			<div class="mb-3">
 				<h4 class="font-weight-bold">Watchlist</h4>
 				<ul class="list-group">
@@ -38,6 +38,38 @@
 					<% } %>
 				</ul>
 			</div>
+			<div class="mb-3">
+				<h4 class="font-weight-bold">Persons following</h4>
+				<ul class="list-group">
+					<% if(pUser.followingPersons.length) { for (let person of
+					pUser.followingPersons) { %>
+					<li class="list-group-item">
+						<a href="/persons/<%= person._id %>"
+							><%= person.name %></a
+						>
+					</li>
+					<% } } else { %>
+					<p class="text-center">No data available.</p>
+					<% } %>
+				</ul>
+			</div>
+			<% if (isOwnProfile) { %>
+			<div class="mb-3">
+				<h4 class="font-weight-bold">Users following</h4>
+				<ul class="list-group">
+					<% if(pUser.followingUsers.length) { for (let user of
+					pUser.followingUsers) { %>
+					<li class="list-group-item">
+						<a href="/users/<%= user._id %>/profile"
+							><%= user.name %></a
+						>
+					</li>
+					<% } } else { %>
+					<p class="text-center">No data available.</p>
+					<% } %>
+				</ul>
+			</div>
+			<% } %>
 			<div class="mb-3">
 				<h4 class="font-weight-bold">Reviews</h4>
 				<ul class="list-group">
